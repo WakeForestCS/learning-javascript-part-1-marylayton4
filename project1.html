@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- TIP CALCULATOR -->
+
+<html>
+	<head> 
+		<!-- <link rel="stylesheet" type="text/css" href="stylesheet.css" title="style"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title> TIP Calculator </title>
+		<style>
+			body {
+				font-family: fantasy;
+  				background-color: #6A5ACD;
+  				color: #FF7F50;
+  				border-color: #FF1493;
+  				border-width: 15px;
+  				border-style: groove;
+  				font-size: 30px;
+  				text-align: center;
+			}
+			h1 {
+				font-family: serif;
+  				color: #FF1493;
+    			font-size: 50px;
+    			text-align: center;
+
+			}
+			.lab {
+				color: #FF1493;
+				font-family: serif;
+				font-style: bold;
+
+			}
+
+			.slidecontainer {
+    			width: 100%;
+    			height: 25%;
+			}
+
+			.slider {
+    			-webkit-appearance: none;
+    			width: 50%;
+    			height: 25px;
+    			background: #FF1493;
+    			outline: none;
+    			opacity: 0.7;
+    			-webkit-transition: .2s;
+    			transition: opacity .2s;
+			}
+
+			.slider:hover {
+    			opacity: 1;
+			}
+
+
+			.slider::-webkit-slider-thumb {
+    			-webkit-appearance: none;
+    			appearance: none;
+    			width: 25px;
+    			height: 25px;
+    			border: 1 solid orange;
+    			background: #FF7F50;
+    			cursor: pointer;
+			}
+
+			.slider::-moz-range-thumb {
+    			width: 25px;
+    			height: 25px;
+    			background: #4CAF50;
+    			cursor: pointer;
+			}
+		</style>
+	</head>
+	<h1> <center><b>Tip Calculator </b></center></h1>
+	<body>
+		<p> Welcome to Tip Calculator!! Enter your current check balance and how much you would like to tip and the calculator will do the rest!!</p>
+
+		<form action="javascript:void(calc())">
+        	Amount: $<input id="bill" type="text" size="8" placeholder="$$$" onchange="tax()" >
+        	<br>
+        	<div class = "slidecontainer">
+        		Tip percentage: %<input id="tip_per" type="range" min="0" max="100" value="20" step="1" class="slider" onchange="calc()">
+        		<span id="slideval">0%</span>
+        	</div>
+        	<br>
+        	<input type="submit" value="Calculate">
+        	<br>
+        		<b class="lab">Tax: </b> <span id="tax"></span>
+        		<br>
+        		<b class="lab">Tip: </b><span id="tip"></span>
+        		<br>
+        		<b class="lab">Total: </b><span id="total"></span>
+        		<br>
+        	<input type="reset" value="RESET">
+    	</form>
+		<script>
+			// CALCULATES THE TIP AND TOTAL
+    		function calc() {
+        		var bill = Number(document.getElementById('bill').value);
+        		var percent = Number(document.getElementById('tip_per').value);
+        		var slideval = Number(document.getElementById('slideval').value)
+        		var dec = percent/100;
+        		var tip_amount = bill * dec;
+        		var total_bill = bill + tip_amount;
+
+        		document.getElementById("slideval").innerHTML= Number(percent)+"%";
+
+        		document.getElementById("tip").innerHTML= "$"+Number(tip_amount).toFixed(2);
+        		document.getElementById("total").innerHTML= "$"+Number(total_bill).toFixed(2);
+
+    		}
+    		// CALCULATING THE TAX
+    		function tax() {
+    			var bill2 = Number(document.getElementById('bill').value);
+    			var tax = Number(document.getElementById('tax').value);
+    			var tax_amount = bill2 * .07;
+
+    			document.getElementById("tax").innerHTML= "$"+Number(tax_amount).toFixed(2);
+    		}
+    		// RESETS THE INPUT AND OUTPUT FIELDS
+    		/*function reset_calc(tax()) {
+    			document.getElementById("tip").innerHTML= "$"+ 0;
+       			document.getElementById("total").innerHTML= "$"+ 0;
+        		document.getElementById("tax").innerHTML= "$"+ 0;
+    		}*/
+    	
+    		var slider = document.getElementById("tip_per");
+			var output = document.getElementById("slideval");
+			output.innerHTML = slider.value + '%'; // Display the default slider value
+
+			// Update the current slider value (each time you drag the slider handle)
+			slider.oninput = function() {
+    			output.innerHTML = this.value + '%';
+			}
+
+
+		</script>
+	</body>
+
+</html>
+
